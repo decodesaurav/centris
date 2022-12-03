@@ -154,12 +154,10 @@ end
         sel = Selector(text=html)
         listings = sel.xpath("//div[@class='shell']")
         for listing in listings:
-            category = listing.xpath(
-                ".//span[@class='category']/div/text()").get()
+            category = listing.xpath("normalize-space(.//span[@class='category']/div/text())").get()
             features_bed = listing.xpath(".//div[@class='sdb']/text()").get()
             features_bathroom = listing.xpath(".//div[@class='cac']/text()").get()
-            price = listing.xpath(
-                ".//div[@class='price']/span[1]/text()").get()
+            price = listing.xpath("normalize-space(.//div[@class='price']/span[1]/text())").get()
             city = listing.xpath(
                 ".//span[@class='address']/div[1]/text()").get()
             url = listing.xpath(
@@ -199,7 +197,7 @@ end
             )
     def parse_summary(self,response):
         address = response.xpath("//h2[@itemprop='address']/text()").get()
-        description = response.xpath("//div[@itemprop='description']/text()").get()
+        description = response.xpath("normalize-space(//div[@itemprop='description']/text())").get()
         category = response.request.meta['cat']
         features_bed = response.request.meta['fea-bed']
         features_bath = response.request.meta['fea-bath']
